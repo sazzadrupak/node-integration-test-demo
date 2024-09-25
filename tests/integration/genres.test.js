@@ -29,7 +29,7 @@ describe('/api/genres', () => {
   });
 
   describe('GET /:id', () => {
-    it('should return genre if valid is passed', async () => {
+    it('should return genre if valid id passed', async () => {
       const genre = new Genre({ name: 'genre1' });
       await genre.save();
 
@@ -37,6 +37,12 @@ describe('/api/genres', () => {
 
       expect(res.status).toBe(200);
       expect(res.body).toHaveProperty('name', genre.name);
+    });
+
+    it('should return 404 if invalid id passed', async () => {
+      const res = await request(server).get(`/api/genres/1`);
+
+      expect(res.status).toBe(404);
     });
   });
 });
