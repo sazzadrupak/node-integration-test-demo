@@ -25,6 +25,9 @@ router.post('/', auth, async (req, res) => {
     return res.status(400).send('Return already processed');
   }
 
+  rental.dateReturned = new Date();
+  await rental.save();
+
   return res.status(200).send();
 });
 
