@@ -9,10 +9,10 @@ const express = require('express');
 const router = express.Router();
 
 router.post('/', [auth, validate(validateReturn)], async (req, res) => {
-  const rental = Rental.findOne({
-    'customer._id': req.body.customerId,
-    'movie._id': req.body.movieId,
-  });
+  // Static method: Rental.lookup (method available directly on a class)
+  // Instance method: new User().generateAuthToken() (method only available on the instance of a class)
+  const rental = await Rental.lookup(req.body.customerId, req.body.movieId);
+
   if (rental == null) {
     return res.status(404).send('Rental not found');
   }
